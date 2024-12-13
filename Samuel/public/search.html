@@ -75,7 +75,7 @@
     <script>
         async function loadFestivals() {
             try {
-                const response = await fetch('../data/festivals.json');
+                const response = await fetch('/data/festivals.json');
                 const festivals = await response.json();
                 const container = document.getElementById('festivalResults');
                 const searchInput = document.getElementById('searchInput');
