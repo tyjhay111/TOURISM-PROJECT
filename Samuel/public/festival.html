@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Festival Details - Volta Festivals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-background": "#F8F9FA",
+              "brand-text": "#2C3E50",
+              "brand-accent": "#4A7C59",
+              "brand-secondary": "#6B8E23",
+              "brand-highlight": "#D4AF37",
+            },
+            fontFamily: {
+              title: ["Playfair Display", "serif"],
+              body: ["Open Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-brand-background font-body text-brand-text leading-normal tracking-normal"
+  >
+    <header class="bg-white text-brand-accent shadow-md">
+      <div
+        class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center"
+      >
+        <h1 class="text-3xl font-title font-bold">Volta Festivals</h1>
+        <button
+          id="menu-toggle"
+          class="sm:hidden text-brand-accent focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <nav
+          id="menu"
+          class="hidden sm:flex w-full sm:w-auto sm:space-x-4 flex-col sm:flex-row mt-4 sm:mt-0"
+        >
+          <a
+            href="index.html"
+            class="block sm:inline hover:text-brand-highlight"
+            >Home</a
+          >
+          <a
+            href="districts.html"
+            class="block sm:inline hover:text-brand-highlight"
+            >Districts</a
+          >
+          <a
+            href="search.html"
+            class="block sm:inline hover:text-brand-highlight"
+            >Search</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+      <section id="festival-details" class="bg-white rounded-lg shadow-lg p-8">
+        <div id="loading" class="text-center text-gray-600">
+          Loading festival details...
+        </div>
+      </section>
+
+      <section id="related-festivals" class="mt-8">
+        <h3 class="text-2xl font-title font-semibold text-brand-accent mb-4">
+          Related Festivals
+        </h3>
+        <div id="related-festivals-container" class="grid md:grid-cols-3 gap-6">
+          <!-- Related festivals will be dynamically populated -->
+        </div>
+      </section>
+    </main>
+
+
+    <script>
+      async function loadFestivalDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const districtName = urlParams.get("district"); // Getting district name from the query parameter
+
+        if (!districtName) {
+          document.getElementById("festival-details").innerHTML =
+            '<p class="text-center text-red-600">District not specified</p>';
+          return;
+        }
+
+        try {
+          const festivalsResponse = await fetch("../data/festivals.json");
+          const { festivals } = await festivalsResponse.json();
+
+          const festival = festivals.find(
+            (f) => f.district.toLowerCase() === districtName.toLowerCase()
+          );
+
+          if (!festival) {
+            document.getElementById("festival-details").innerHTML =
+              '<p class="text-center text-red-600">Festival not found for the specified district</p>';
+            return;
+          }
+
+          renderFestivalDetails(festival);
+          renderRelatedFestivals(festivals, festival);
+        } catch (error) {
+          console.error("Error loading festival details:", error);
+          document.getElementById("festival-details").innerHTML =
+            '<p class="text-center text-red-600">Failed to load festival details. ' +
+            error.message +
+            "</p>";
+        }
+      }
+
+      function renderFestivalDetails(festival) {
+        const detailsContainer = document.getElementById("festival-details");
+        detailsContainer.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <img src="../assets/images/festivals/${festival.id}.jpg" 
+                             alt="${festival.name}" 
+                             class="w-full h-96 object-cover rounded-lg mb-4"
+                             onerror="this.src='../assets/images/festivals/default.jpg'">
+                    </div>
+                    <div>
+                        <h2 class="text-4xl font-title font-bold text-brand-accent mb-4">${festival.name}</h2>
+                        <p class="text-gray-600 mb-4">District: ${festival.district}</p>
+                        <div class="bg-brand-background p-4 rounded-lg mb-4">
+                            <h3 class="font-semibold text-brand-accent mb-2">Date of Celebration</h3>
+                            <p>${festival.dateOfCelebration} (${festival.duration})</p>
+                        </div>
+                        <div class="prose text-gray-700 mb-4">
+                            <p>${festival.description}</p>
+                        </div>
+                        <div class="bg-brand-background p-4 rounded-lg mb-4">
+                            <h3 class="font-semibold text-brand-accent mb-2">Cultural Significance</h3>
+                            <p>${festival.cultural_significance}</p>
+                        </div>
+                        <div class="bg-brand-background p-4 rounded-lg mb-4">
+                            <h3 class="font-semibold text-brand-accent mb-2">Traditions and Customs</h3>
+                            <p>${festival.traditions_and_customs}</p>
+                        </div>
+                        <div class="bg-brand-background p-4 rounded-lg">
+                            <h3 class="font-semibold text-brand-accent mb-2">Key Details</h3>
+                            <ul class="list-disc list-inside">
+                                <li><strong>Tribe:</strong> ${festival.tribe}</li>
+                                <li><strong>Constituency:</strong> ${festival.constituency}</li>
+                                <li><strong>Key Figures:</strong> ${festival.key_figures}</li>
+                                <li><strong>Notable Participants:</strong> ${festival.notable_participants}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 bg-brand-background p-4 rounded-lg">
+                    <h3 class="font-semibold text-brand-accent mb-2">Myths and Stories</h3>
+                    <p>${festival.myths_or_stories}</p>
+                </div>
+                <div class="mt-4 bg-brand-background p-4 rounded-lg">
+                    <h3 class="font-semibold text-brand-accent mb-2">Festival Impact</h3>
+                    <p>${festival.festival_impact_on_local_community}</p>
+                </div>
+            `;
+      }
+
+      function renderRelatedFestivals(festivals, currentFestival) {
+        const relatedContainer = document.getElementById(
+          "related-festivals-container"
+        );
+        const relatedFestivals = festivals
+          .filter(
+            (f) =>
+              f.tribe === currentFestival.tribe && f.id !== currentFestival.id
+          )
+          .slice(0, 3);
+
+        if (relatedFestivals.length === 0) {
+          relatedContainer.innerHTML =
+            '<p class="text-gray-600">No related festivals found</p>';
+          return;
+        }
+
+        relatedContainer.innerHTML = relatedFestivals
+          .map(
+            (festival) => `
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <img src="../assets/images/festivals/${festival.id}.jpg" 
+                         alt="${festival.name}" 
+                         class="w-full h-48 object-cover rounded-md mb-4"
+                         onerror="this.src='../assets/images/festivals/default.jpg'">
+                                                <h4 class="text-xl font-semibold text-brand-accent">${festival.name}</h4>
+                    <p class="text-gray-600">District: ${festival.district}</p>
+                    <p class="text-sm text-gray-500 mt-2">${festival.dateOfCelebration} (${festival.duration})</p>
+                    <a href="festival.html?district=${festival.district}" 
+                       class="mt-4 inline-block text-brand-highlight font-medium hover:underline">View Details</a>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      // Load festival details on page load
+      document.addEventListener("DOMContentLoaded", loadFestivalDetails);
+
+      // Toggle navigation menu for mobile view
+      const menuToggle = document.getElementById("menu-toggle");
+      const menu = document.getElementById("menu");
+      menuToggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>
