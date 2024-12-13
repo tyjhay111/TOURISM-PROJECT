@@ -105,7 +105,7 @@
         }
 
         try {
-          const festivalsResponse = await fetch("../data/festivals.json");
+          const festivalsResponse = await fetch("/data/festivals.json");
           const { festivals } = await festivalsResponse.json();
 
           const festival = festivals.find(
