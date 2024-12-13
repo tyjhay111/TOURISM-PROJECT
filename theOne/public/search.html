@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Festivals - Volta Festivals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "brand-background": "#F8F9FA",
+                        "brand-text": "#2C3E50",
+                        "brand-accent": "#4A7C59",
+                        "brand-secondary": "#6B8E23",
+                        "brand-highlight": "#D4AF37",
+                    },
+                    fontFamily: {
+                        title: ["Playfair Display", "serif"],
+                        body: ["Open Sans", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-brand-background text-brand-text">
+        <header class="bg-white text-brand-accent p-4 shadow-sm">
+    <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+        <h1 class="text-2xl font-bold font-title mb-4 sm:mb-0">Volta Festivals</h1>
+        <ul class="flex flex-wrap justify-center sm:justify-end space-x-4">
+            <li><a href="index.html" class="hover:text-brand-highlight">Home</a></li>
+            <li><a href="districts.html" class="hover:text-brand-highlight">Districts</a></li>
+            <li><a href="search.html" class="hover:text-brand-highlight">Search</a></li>
+            <li><a href="about.html" class="hover:text-brand-highlight">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <main class="container mx-auto mt-8 p-4">
+        <section>
+            <h2 class="text-3xl font-bold mb-4 font-title text-brand-secondary">Search Volta Festivals</h2>
+            
+            <div class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <input type="text" id="searchInput" placeholder="Search festivals, districts, tribes..." 
+                    class="w-full p-2 border rounded flex-grow focus:border-brand-accent">
+                
+                <select id="districtFilter" class="w-full sm:w-auto p-2 border rounded focus:border-brand-accent">
+                    <option value="">All Districts</option>
+                    <!-- District options will be added dynamically -->
+                </select>
+            </div>
+
+            <div id="searchStats" class="mb-4 text-brand-text hidden">
+                <p id="resultCount">0 results found</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="festivalResults">
+            </div>
+
+            <div id="noResults" class="text-center mt-8 hidden">
+                <p class="text-xl text-brand-secondary">No festivals found. Try a different search term.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        async function loadFestivals() {
+            try {
+                const response = await fetch('/data/festivals.json');
+                const festivals = await response.json();
+                const container = document.getElementById('festivalResults');
+                const searchInput = document.getElementById('searchInput');
+                const districtFilter = document.getElementById('districtFilter');
+                const noResultsMessage = document.getElementById('noResults');
+
+                function renderFestivals(filteredFestivals) {
+                    container.innerHTML = '';
+                    noResultsMessage.classList.toggle('hidden', filteredFestivals.length > 0);
+
+                    filteredFestivals.forEach(festival => {
+                        const festivalCard = document.createElement('div');
+                        festivalCard.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'p-6', 'hover:shadow-xl', 'transition-shadow');
+
+                        festivalCard.dataset.name = festival.name.toLowerCase();
+                        festivalCard.dataset.district = festival.district.toLowerCase();
+
+                        festivalCard.innerHTML = `
+                            <h3 class="text-2xl font-semibold text-brand-secondary mb-4">${festival.name}</h3>
+                            <img src="../assets/images/festivals/${festival.image}" alt="${festival.name}" 
+                                 class="w-full h-48 object-cover rounded-md mb-4">
+                            <p class="text-brand-text mb-4">${festival.description}</p>
+                            <a href="festival.html?district=${festival.district}" class="block text-center bg-brand-accent text-white py-2 rounded hover:bg-brand-highlight transition">
+                                View Details
+                            </a>
+                        `;
+
+                        container.appendChild(festivalCard);
+                    });
+
+                    document.getElementById('resultCount').textContent = `${filteredFestivals.length} result(s) found`;
+                }
+
+                renderFestivals(festivals.festivals);
+
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+
+                    const filteredFestivals = festivals.festivals.filter(festival => 
+                        festival.name.toLowerCase().includes(searchTerm) || 
+                        festival.district.toLowerCase().includes(searchTerm) || 
+                        festival.tribe.toLowerCase().includes(searchTerm)
+                    );
+
+                    renderFestivals(filteredFestivals);
+                });
+
+                districtFilter.addEventListener('change', (e) => {
+                    const selectedDistrict = e.target.value.toLowerCase();
+                    const filteredFestivals = festivals.festivals.filter(festival => 
+                        selectedDistrict === "" || festival.district.toLowerCase() === selectedDistrict
+                    );
+
+                    renderFestivals(filteredFestivals);
+                });
+
+                const districts = Array.from(new Set(festivals.festivals.map(festival => festival.district)));
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading festivals:', error);
+                document.getElementById('festivalResults').innerHTML = `<p class="text-red-500">Error loading festivals.</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadFestivals);
+    </script>
+</body>
+</html>

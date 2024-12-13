@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volta Region Districts - Exploring Cultural Diversity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "brand-background": "#F8F9FA",
+                        "brand-text": "#2C3E50",
+                        "brand-accent": "#4A7C59",
+                        "brand-secondary": "#6B8E23",
+                        "brand-highlight": "#D4AF37",
+                    },
+                    fontFamily: {
+                        title: ["Playfair Display", "serif"],
+                        body: ["Open Sans", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-brand-background font-body text-brand-text leading-normal tracking-normal">
+    <header class="bg-white text-brand-accent shadow-md">
+        <div class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center">
+            <h1 class="text-3xl font-title font-bold">Volta Festivals</h1>
+            <button id="menu-toggle" class="sm:hidden text-brand-accent focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <nav id="menu" class="hidden sm:flex w-full sm:w-auto sm:space-x-4 flex-col sm:flex-row mt-4 sm:mt-0">
+                <a href="index.html" class="block sm:inline hover:text-brand-highlight">Home</a>
+                <a href="districts.html" class="block sm:inline hover:text-brand-highlight">Districts</a>
+                <a href="search.html" class="block sm:inline hover:text-brand-highlight">Search</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section>
+            <h2 class="text-4xl font-title font-bold text-brand-accent mb-6">Volta Region Districts</h2>
+            
+            <div class="mb-6 flex flex-wrap gap-4">
+                <input type="text" id="search-districts" placeholder="Search districts..." 
+                    class="flex-grow px-4 py-2 border border-brand-secondary rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                <select id="filter-district" class="flex-shrink-0 px-4 py-2 border border-brand-secondary rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                    <option value="">All Districts</option>
+                </select>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="districts-container">
+                <!-- Districts will be dynamically populated by JavaScript -->
+            </div>
+
+            <div id="no-results" class="hidden text-center text-gray-600 mt-10">
+                <p class="text-2xl">No districts found matching your search</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('hidden');
+        });
+
+        async function loadDistricts() {
+            try {
+                const response = await fetch('/data/districts.json');
+                const districts = await response.json();
+                const container = document.getElementById('districts-container');
+                const searchInput = document.getElementById('search-districts');
+                const districtFilter = document.getElementById('filter-district');
+                const noResultsMessage = document.getElementById('no-results');
+
+                function renderDistricts(filteredDistricts) {
+                    container.innerHTML = '';
+                    noResultsMessage.classList.toggle('hidden', filteredDistricts.length > 0);
+
+                    filteredDistricts.forEach(district => {
+                        const districtCard = document.createElement('div');
+                        districtCard.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'p-6', 'hover:shadow-lg', 'transition-shadow');
+                        
+                        districtCard.innerHTML = `
+                            <h3 class="text-2xl font-title font-semibold text-brand-accent mb-4">${district.name}</h3>
+                            <img src="/assets/images/districts/${district.image}" alt="${district.name}" 
+                                 class="w-full h-48 object-cover rounded-md mb-4">
+                            <p class="text-gray-700 mb-4">${district.description}</p>
+                            <a href="festival.html?district=${district.id}" 
+                               class="block text-center bg-brand-accent text-white py-2 rounded hover:bg-brand-secondary transition">
+                                Explore Festivals
+                            </a>
+                        `;
+
+                        container.appendChild(districtCard);
+                    });
+                }
+
+                renderDistricts(districts);
+
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+                    const filteredDistricts = districts.filter(district => 
+                        district.name.toLowerCase().includes(searchTerm)
+                    );
+                    renderDistricts(filteredDistricts);
+                });
+
+                const districtOptions = districts.map(d => `<option value="${d.name.toLowerCase()}">${d.name}</option>`).join('');
+                districtFilter.innerHTML += districtOptions;
+
+                districtFilter.addEventListener('change', (e) => {
+                    const selectedDistrict = e.target.value;
+                    const filteredDistricts = districts.filter(district => 
+                        !selectedDistrict || district.name.toLowerCase() === selectedDistrict
+                    );
+                    renderDistricts(filteredDistricts);
+                });
+            } catch (error) {
+                console.error('Error loading districts:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDistricts);
+    </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volta Festivals - Celebrating Ghana's Cultural Heritage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-background": "#F8F9FA",
+              "brand-text": "#2C3E50",
+              "brand-accent": "#4A7C59",
+              "brand-secondary": "#6B8E23",
+              "brand-highlight": "#D4AF37",
+            },
+            fontFamily: {
+              title: ["Playfair Display", "serif"],
+              body: ["Open Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Open Sans", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .hero-overlay {
+        background: linear-gradient(
+          rgba(74, 124, 89, 0.5),
+          rgba(74, 124, 89, 0.5)
+        );
+      }
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(248, 249, 250, 0.95);
+        transition: left 0.3s ease-in-out;
+        z-index: 60;
+      }
+      .mobile-menu.active {
+        left: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-brand-background text-brand-text">
+    <header class="fixed w-full top-0 z-50 bg-white shadow-sm">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <img
+            src="https://placekitten.com/50/50"
+            alt="Volta Festivals Logo"
+            class="h-10 w-10 rounded-full"
+          />
+          <h1 class="text-xl font-bold font-title text-brand-accent">
+            Volta Festivals
+          </h1>
+        </div>
+        <nav class="hidden md:block">
+          <ul class="flex space-x-5">
+            <li>
+              <a
+                href="#"
+                class="text-brand-text hover:text-brand-accent transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="districts.html"
+                class="text-brand-text hover:text-brand-accent transition"
+                >Districts</a
+              >
+            </li>
+            <li>
+              <a
+                href="search.html"
+                class="text-brand-text hover:text-brand-accent transition"
+                >Festivals</a
+              >
+            </li>
+            <li>
+              <a
+                href="about.html"
+                class="text-brand-text hover:text-brand-accent transition"
+                >About Us</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <button id="mobile-menu-toggle" class="md:hidden text-brand-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="{2}"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu md:hidden">
+      <div class="flex flex-col items-center justify-center h-full space-y-6">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-2xl">
+          ×
+        </button>
+        <a href="#" class="text-2xl text-brand-text hover:text-brand-accent"
+          >Home</a
+        >
+        <a
+          href="districts.html"
+          class="text-2xl text-brand-text hover:text-brand-accent"
+          >Districts</a
+        >
+        <a
+          href="search.html"
+          class="text-2xl text-brand-text hover:text-brand-accent"
+          >Festivals</a
+        >
+        <a
+          href="About Us"
+          class="text-2xl text-brand-text hover:text-brand-accent"
+          >About Us</a
+        >
+      </div>
+    </div>
+
+    <main class="pt-20">
+      <section
+        class="relative min-h-screen flex items-center justify-center text-center"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          style="
+            background-image: url('../assets/images/adomi-bridge.jpg');
+          "
+        >
+          <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+        <div class="relative z-10 px-4 text-white">
+          <h2 class="text-4xl md:text-6xl font-bold mb-6 font-title">
+            Discover Volta's Heritage
+          </h2>
+          <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+            Explore the vibrant cultural tapestry of Ghana's Volta Region, where
+            tradition, art, and community converge.
+          </p>
+          <div class="flex justify-center space-x-4">
+            <a
+              href="search.html"
+              class="bg-brand-accent text-white px-6 py-3 rounded-full hover:bg-opacity-90 transition"
+            >
+              Explore Festivals
+            </a>
+            <a
+              href="districts.html"
+              class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-brand-text transition"
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about-region" class="py-16 container mx-auto px-4">
+        <h3
+          class="text-4xl font-bold text-center mb-12 font-title text-brand-accent"
+        >
+          The Volta Region: A Cultural Gem
+        </h3>
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p class="text-lg mb-4">
+              Nestled in southeastern Ghana, the Volta Region is a vibrant
+              mosaic of cultural diversity, home to numerous ethnic groups
+              including the Ewe, Akan, and Guan peoples.
+            </p>
+            <p class="text-lg mb-4">
+              Known for its stunning landscapes, from the serene Lake Volta to
+              lush mountain ranges, the region is a treasure trove of
+              traditional crafts, music, and festivals.
+            </p>
+            <p class="text-lg">
+              The region's cultural identity is deeply rooted in communal living
+              and respect for ancestral traditions.
+            </p>
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1547336863-d82bcf6ea0e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+              alt="Volta Region Landscape"
+              class="rounded-lg shadow-lg w-full object-cover h-96"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="festivals" class="py-16 bg-brand-background">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-4xl font-bold text-center mb-12 font-title text-brand-accent"
+          >
+            Vibrant Festivals
+          </h3>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div
+              class="bg-white border rounded-lg p-6 shadow-sm transform transition hover:shadow-md"
+            >
+              <h4 class="text-2xl font-bold mb-4 text-brand-secondary">
+                Hogbetsotso Festival
+              </h4>
+              <p class="mb-4 text-brand-text">
+                An annual celebration by the Anlo Ewe people, commemorating
+                their migration and featuring vibrant dancing, music, and
+                traditional rites.
+              </p>
+              <span className="text-brand-highlight font-semibold"
+                >November</span
+              >
+            </div>
+            <div
+              className="bg-white border rounded-lg p-6 shadow-sm transform transition hover:shadow-md"
+            >
+              <h4 class="text-2xl font-bold mb-4 text-brand-secondary">
+                Asogli Yam Festival
+              </h4>
+              <p className="mb-4 text-brand-text">
+                A harvest festival celebrating the first yam crop, featuring
+                traditional performances, drumming, and communal feasting.
+              </p>
+              <span className="text-brand-highlight font-semibold"
+                >September</span
+              >
+            </div>
+            <div
+              className="bg-white border rounded-lg p-6 shadow-sm transform transition hover:shadow-md"
+            >
+              <h4 class="text-2xl font-bold mb-4 text-brand-secondary">
+                Klenyatse Festival
+              </h4>
+              <p className="mb-4 text-brand-text">
+                A traditional festival of the Krobo people, highlighting
+                cultural heritage through dance, music, and traditional customs.
+              </p>
+              <span className="text-brand-highlight font-semibold">August</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="culture" class="py-16 container mx-auto px-4">
+        <h3
+          class="text-4xl font-bold text-center mb-12 font-title text-brand-accent"
+        >
+          Cultural Highlights
+        </h3>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center bg-white border rounded-lg p-6 shadow-sm">
+            <div class="text-6xl mb-4 text-brand-secondary">🥁</div>
+            <h4 class="text-2xl font-bold mb-4 text-brand-text">
+              Music & Dance
+            </h4>
+            <p class="text-brand-text">
+              Traditional drumming and dance are integral to Volta's cultural
+              expression, telling stories of community and history.
+            </p>
+          </div>
+          <div class="text-center bg-white border rounded-lg p-6 shadow-sm">
+            <div class="text-6xl mb-4 text-brand-secondary">🏺</div>
+            <h4 class="text-2xl font-bold mb-4 text-brand-text">Crafts</h4>
+            <p class="text-brand-text">
+              Renowned for intricate kente cloth, pottery, and basketry that
+              showcase exceptional artistic skills.
+            </p>
+          </div>
+          <div class="text-center bg-white border rounded-lg p-6 shadow-sm">
+            <div class="text-6xl mb-4 text-brand-secondary">🌿</div>
+            <h4 class="text-2xl font-bold mb-4 text-brand-text">
+              Traditional Living
+            </h4>
+            <p class="text-brand-text">
+              A society deeply connected to agricultural practices and communal
+              living principles.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+   <footer class="bg-brand-accent text-white py-12" style="background-color: #ADCCBA;">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-brand-highlight">Home</a></li>
+          <li><a href="districts.html" class="hover:text-brand-highlight">Districts</a></li>
+          <li><a href="festival.html" class="hover:text-brand-highlight">Festivals</a></li>
+          <li><a href="about.html" class="hover:text-brand-highlight">About Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect With Us -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">Connect With Us</h4>
+        <div class="flex space-x-4">
+          <a href="#" class="text-2xl hover:text-brand-highlight">🐦</a>
+          <a href="#" class="text-2xl hover:text-brand-highlight">📸</a>
+          <a href="#" class="text-2xl hover:text-brand-highlight">📘</a>
+        </div>
+      </div>
+
+      <!-- Stay Informed -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">Stay Informed</h4>
+        <form class="flex">
+          <input
+            type="email"
+            placeholder="Your email"
+            class="px-4 py-2 w-full rounded-l-[14px] text-brand-text bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-accent"
+          />
+          <button
+            type="submit"
+            class="bg-brand-highlight text-white px-6 rounded-r-[14px] hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-brand-highlight"
+          >
+            Join
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer Text -->
+    <div class="text-center mt-8 border-t border-white/20 pt-6">
+      <p class="text-sm">&copy; 2024 Volta Festivals. Celebrating Cultural Heritage.</p>
+    </div>
+  </div>
+</footer>
+
+
+    <script>
+      const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+      const mobileMenuClose = document.getElementById("mobile-menu-close");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileMenuToggle.addEventListener("click", () => {
+        mobileMenu.classList.add("active");
+      });
+
+      mobileMenuClose.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+      });
+
+      document.querySelectorAll("#mobile-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
