@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volta Festivals - Celebrating Ghana's Cultural Heritage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-background": "#F8F9FA",
+              "brand-text": "#2C3E50",
+              "brand-accent": "#4A7C59",
+              "brand-secondary": "#6B8E23",
+              "brand-highlight": "#D4AF37",
+            },
+            fontFamily: {
+              title: ["Playfair Display", "serif"],
+              body: ["Open Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Open Sans", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(248, 249, 250, 0.95);
+        transition: left 0.3s ease-in-out;
+        z-index: 60;
+      }
+      .mobile-menu.active {
+        left: 0;
+      }
+      /* Accessibility: Skip Navigation Link */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: white;
+        padding: 8px;
+        z-index: 100;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+    </style>
+
+  <style>
+@keyframes text-reveal {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+  }
+}
+
+@keyframes line-reveal {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.text-reveal-title {
+  animation: text-reveal 3.5s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.text-reveal-subtitle {
+  animation: text-reveal 1.2s cubic-bezier(0.5, 0, 0.2, 1) 0.3s forwards;
+  opacity: 0;
+}
+
+.line-reveal {
+  position: relative;
+}
+
+.line-reveal::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  height: 2px;
+  background-color: rgba(255,255,255,0.7);
+  animation: line-reveal 1s cubic-bezier(0.5, 0, 0.2, 1) 1.5s forwards;
+  width: 0;
+}
+
+.buttons-reveal {
+  opacity: 0;
+  animation: text-reveal 0.8s cubic-bezier(0.5, 0, 0.2, 1) 1.6s forwards;
+}
+</style>
+  </head>
+  <body class="bg-brand-background text-brand-text">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+ <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-3 text-brand-accent transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      
+      <h1 class="text-xl font-bold font-title text-brand-accent group">
+        <span class="transition-all duration-300 group-hover:tracking-wider">
+          Volta Festivals
+        </span>
+      </h1>
+    </div>
+    
+    <nav class="hidden md:block" aria-label="Desktop Navigation">
+      <ul class="flex space-x-5">
+        <li>
+          <a href="#" 
+             class="relative text-brand-text hover:text-brand-accent transition 
+                    before:absolute before:bottom-0 before:left-0 before:w-0 
+                    before:h-0.5 before:bg-brand-accent 
+                    hover:before:w-full before:transition-all" 
+             aria-current="page">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="districts.html" 
+             class="relative text-brand-text hover:text-brand-accent transition 
+                    before:absolute before:bottom-0 before:left-0 before:w-0 
+                    before:h-0.5 before:bg-brand-accent 
+                    hover:before:w-full before:transition-all">
+            Districts
+          </a>
+        </li>
+        <li>
+          <a href="search.html" 
+             class="relative text-brand-text hover:text-brand-accent transition 
+                    before:absolute before:bottom-0 before:left-0 before:w-0 
+                    before:h-0.5 before:bg-brand-accent 
+                    hover:before:w-full before:transition-all">
+            Festivals
+          </a>
+        </li>
+        <li>
+          <a href="about.html" 
+             class="relative text-brand-text hover:text-brand-accent transition 
+                    before:absolute before:bottom-0 before:left-0 before:w-0 
+                    before:h-0.5 before:bg-brand-accent 
+                    hover:before:w-full before:transition-all">
+            About Us
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="flex items-center space-x-4">
+      <button 
+        id="mobile-menu-toggle" 
+        class="md:hidden text-brand-text hover:text-brand-accent transition transform active:scale-90"
+        aria-label="Open Mobile Menu"
+        aria-expanded="false"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const body = document.body;
+
+  mobileMenuToggle.addEventListener('click', () => {
+    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+    mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+    
+    // You would typically toggle a mobile menu here
+    // For this example, we'll just add a class to demonstrate
+    body.classList.toggle('mobile-menu-open');
+  });
+});
+</script>
+
+    <div 
+      id="mobile-menu" 
+      class="mobile-menu md:hidden" 
+      aria-label="Mobile Navigation"
+    >
+      <div class="flex flex-col items-center justify-center h-full space-y-6">
+        <button 
+          id="mobile-menu-close" 
+          class="absolute top-4 right-4 text-2xl"
+          aria-label="Close Mobile Menu"
+        >
+          ×
+        </button>
+        <nav>
+          <ul class="space-y-4 text-center">
+            <li><a href="#" class="text-2xl text-brand-text hover:text-brand-accent" aria-current="page">Home</a></li>
+            <li><a href="districts.html" class="text-2xl text-brand-text hover:text-brand-accent">Districts</a></li>
+            <li><a href="search.html" class="text-2xl text-brand-text hover:text-brand-accent">Festivals</a></li>
+            <li><a href="about.html" class="text-2xl text-brand-text hover:text-brand-accent">About Us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+
+    <main class="pt-20">
+
+<section class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+  <div
+    class="absolute inset-0 bg-cover bg-center transform transition-transform duration-500 ease-in-out hover:scale-105"
+    style="background-image: url('assets/images/adomi-bridge.jpg'); filter: brightness(0.6);"
+  >
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  </div>
+  
+  <div class="relative z-10 px-4 text-white">
+    <div class="space-y-6 max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-8xl font-bold mb-6 font-title 
+        transform transition-all duration-700 ease-out 
+        hover:text-brand-accent 
+        hover:tracking-wider
+        animate-fade-in-up">
+        Discover Volta's Heritage
+      </h2>
+      
+      <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto 
+        opacity-0 animate-delay-300 animate-fade-in-up">
+        Explore the vibrant cultural tapestry of Ghana's Volta Region, where tradition, art, and community converge.
+      </p>
+      
+      <div class="flex justify-center space-x-4 
+        opacity-0 animate-delay-600 animate-fade-in-up">
+        <a
+          href="search.html"
+          class="bg-brand-accent text-white px-6 py-3 rounded-full 
+          hover:bg-opacity-90 transition 
+          transform hover:scale-105 hover:shadow-xl 
+          focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-opacity-50"
+        >
+          Explore Festivals
+        </a>
+        <a
+          href="districts.html"
+          class="border-2 border-white text-white px-6 py-3 rounded-full 
+          hover:bg-white hover:text-brand-text 
+          transition transform hover:scale-105 hover:shadow-xl
+          focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+        >
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-600 {
+  animation-delay: 0.6s;
+}
+</style>
+
+  <section id="about-region" class="py-16 container mx-auto px-4">
+    <h3 class="text-4xl font-bold text-center mb-12 font-title text-[#4A7C59] transform transition-transform duration-500 hover:scale-105">
+        The Volta Region: A Cultural Gem
+    </h3>
+    
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-6">
+            <div class="flex items-start space-x-4 bg-[#4A7C59]/10 p-4 rounded-lg transform transition-transform duration-300 hover:-translate-y-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4A7C59" class="w-10 h-10 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 0 0 1 6 0Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                <p class="text-lg text-gray-700">
+                    Nestled in southeastern Ghana, the Volta Region is a vibrant mosaic of cultural diversity, home to numerous ethnic groups including the Ewe, Akan, and Guan peoples.
+                </p>
+            </div>
+            
+            <div class="flex items-start space-x-4 bg-[#4A7C59]/10 p-4 rounded-lg transform transition-transform duration-300 hover:-translate-y-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4A7C59" class="w-10 h-10 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.74-1.6 3 3 0 0 0-4-4.24 3 3 0 0 0-1.74 2.61m0 0c0 .399.078.78.22 1.128m0 0a15.998 15.998 0 0 0 4.539-1.12c.274.5.423 1.068.423 1.656v.413c0 .681-.205 1.34-.59 1.902m0 0a3 3 0 0 0 2.185.833A3 3 0 0 0 20.5 15.75V9a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0-.75.75v3.75c0 1.657-1.007 3-2.25 3z" />
+                </svg>
+                <p class="text-lg text-gray-700">
+                    Known for its stunning landscapes, from the serene Lake Volta to lush mountain ranges, the region is a treasure trove of traditional crafts, music, and festivals.
+                </p>
+            </div>
+            
+            <div class="flex items-start space-x-4 bg-[#4A7C59]/10 p-4 rounded-lg transform transition-transform duration-300 hover:-translate-y-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4A7C59" class="w-10 h-10 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+                </svg>
+                <p class="text-lg text-gray-700">
+                    The region's cultural identity is deeply rooted in communal living and respect for ancestral traditions, creating a unique and vibrant social tapestry.
+                </p>
+            </div>
+        </div>
+        
+        <div class="relative group">
+            <img 
+                src="assets/images/ewe-people.webp" 
+                alt="Volta Region Landscape" 
+                class="rounded-lg shadow-lg w-full object-cover h-96 transition-transform duration-300 "
+            />
+            <div class="absolute inset-0 bg-[#4A7C59]/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p class="text-white text-xl font-bold text-center">
+                    Explore the Rich Culture of Volta
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <section class="py-16 bg-gradient-to-br from-[#f0f4f8] to-[#e6eef3] relative overflow-hidden">
+        <!-- Subtle Background Shapes -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-[#d0e1f0] rounded-full blur-3xl animate-blob"></div>
+            <div class="absolute bottom-0 right-0 w-72 h-72 bg-[#c0d5e8] rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10" x-data="{ activeCard: null }">
+            <h3 class="text-4xl font-bold text-center mb-12 font-title text-brand-accent transform transition-all duration-500 hover:scale-105">
+                Vibrant Festivals of Volta
+            </h3>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div 
+                    @mouseenter="activeCard = 'hogbetsotso'" 
+                    @mouseleave="activeCard = null"
+                    class="transform transition-all duration-500 hover:scale-105 h-full"
+                    :class="{'scale-105 shadow-2xl': activeCard === 'hogbetsotso'}"
+                >
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col border-2 border-transparent hover:border-brand-accent transition-all">
+                        <div class="p-6 flex-grow">
+                            <h4 class="text-2xl font-bold mb-4 text-brand-secondary">Hogbetsotso Festival</h4>
+                            <p class="mb-4 text-brand-text">An annual celebration by the Anlo Ewe people, commemorating their migration and featuring vibrant dancing, music, and traditional rites.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex justify-between items-center">
+                            <span class="text-brand-highlight font-semibold">November</span>
+                            <a href="#" class="text-brand-accent hover:underline">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div 
+                    @mouseenter="activeCard = 'asogli'" 
+                    @mouseleave="activeCard = null"
+                    class="transform transition-all duration-500 hover:scale-105 h-full"
+                    :class="{'scale-105 shadow-2xl': activeCard === 'asogli'}"
+                >
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col border-2 border-transparent hover:border-brand-accent transition-all">
+                        <div class="p-6 flex-grow">
+                            <h4 class="text-2xl font-bold mb-4 text-brand-secondary">Asogli Yam Festival</h4>
+                            <p class="mb-4 text-brand-text">A harvest festival celebrating the first yam crop, featuring traditional performances, drumming, and communal feasting.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex justify-between items-center">
+                            <span class="text-brand-highlight font-semibold">September</span>
+                            <a href="#" class="text-brand-accent hover:underline">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div 
+                    @mouseenter="activeCard = 'klenyatse'" 
+                    @mouseleave="activeCard = null"
+                    class="transform transition-all duration-500 hover:scale-105 h-full"
+                    :class="{'scale-105 shadow-2xl': activeCard === 'klenyatse'}"
+                >
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col border-2 border-transparent hover:border-brand-accent transition-all">
+                        <div class="p-6 flex-grow">
+                            <h4 class="text-2xl font-bold mb-4 text-brand-secondary">Klenyatse Festival</h4>
+                            <p class="mb-4 text-brand-text">A traditional festival of the Krobo people, highlighting cultural heritage through dance, music, and traditional customs.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex justify-between items-center">
+                            <span class="text-brand-highlight font-semibold">August</span>
+                            <a href="#" class="text-brand-accent hover:underline">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="#" class="bg-brand-accent text-white px-8 py-3 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-110 inline-block shadow-lg">
+                    Explore More About Volta
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes blob {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 15s infinite linear;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+    </style>
+
+    <section id="culture" class="py-16 container mx-auto px-4">
+      <h3 class="text-4xl font-bold text-center mb-12 font-title text-brand-accent relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-brand-accent">
+    Cultural Highlights
+  </h3>
+
+  <!-- Music & Dance Carousel -->
+  <div class="grid lg:grid-cols-2 gap-8 mb-16 group">
+    <div class="flex flex-col justify-center pr-8">
+      <h4 class="text-2xl font-bold mb-4 text-brand-secondary transform transition-transform duration-300 group-hover:-translate-x-2">
+        Music & Dance
+      </h4>
+      <p class="text-brand-text mb-6 opacity-80 transition-opacity duration-300 group-hover:opacity-100">
+        Traditional drumming and dance are integral to Volta's cultural expression, telling stories of community and history.
+      </p>
+    </div>
+
+    <div class="relative overflow-hidden rounded-lg shadow-lg group">
+      <div class="carousel-container relative w-full overflow-hidden" data-carousel="music">
+        <div class="carousel-inner flex transition-transform duration-500 ease-in-out" data-carousel-inner>
+          <img 
+            src="assets/images/muse-1.webp" 
+            alt="Music and Dance 1" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/muse-2.webp" 
+            alt="Music and Dance 2" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/music-and-dance.webp" 
+            alt="Music and Dance 3" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button 
+            data-carousel-prev="music" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            ←
+          </button>
+          <div data-carousel-dots class="flex space-x-2">
+            <span class="w-3 h-3 bg-brand-accent rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+          </div>
+          <button 
+            data-carousel-next="music" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crafts Carousel -->
+  <div class="grid lg:grid-cols-2 gap-8 mb-16 group">
+    <div class="lg:order-2 flex flex-col justify-center pl-8">
+      <h4 class="text-2xl font-bold mb-4 text-brand-secondary transform transition-transform duration-300 group-hover:translate-x-2">
+        Crafts
+      </h4>
+      <p class="text-brand-text mb-6 opacity-80 transition-opacity duration-300 group-hover:opacity-100">
+        Renowned for intricate kente cloth, pottery, and basketry that showcase exceptional artistic skills.
+      </p>
+    </div>
+
+    <div class="lg:order-1 relative overflow-hidden rounded-lg shadow-lg group">
+      <div class="carousel-container relative w-full overflow-hidden" data-carousel="crafts">
+        <div class="carousel-inner flex transition-transform duration-500 ease-in-out" data-carousel-inner>
+          <img 
+            src="assets/images/craft-1.webp" 
+            alt="Crafts 1" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/craft-2.webp" 
+            alt="Crafts 2" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/craft-4.webp" 
+            alt="Crafts 3" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+           <img 
+            src="assets/images/craft-3.webp" 
+            alt="Crafts 3" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button 
+            data-carousel-prev="crafts" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            ←
+          </button>
+          <div data-carousel-dots class="flex space-x-2">
+            <span class="w-3 h-3 bg-brand-accent rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+          </div>
+          <button 
+            data-carousel-next="crafts" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Traditional Living Carousel -->
+  <div class="grid lg:grid-cols-2 gap-8 group">
+    <div class="flex flex-col justify-center pr-8">
+      <h4 class="text-2xl font-bold mb-4 text-brand-secondary transform transition-transform duration-300 group-hover:-translate-x-2">
+        Traditional Living
+      </h4>
+      <p class="text-brand-text mb-6 opacity-80 transition-opacity duration-300 group-hover:opacity-100">
+        A society deeply connected to agricultural practices and communal living principles.
+      </p>
+    </div>
+
+    <div class="relative overflow-hidden rounded-lg shadow-lg group">
+      <div class="carousel-container relative w-full overflow-hidden" data-carousel="living">
+        <div class="carousel-inner flex transition-transform duration-500 ease-in-out" data-carousel-inner>
+          <img 
+            src="assets/images/trad-live-2.webp" 
+            alt="Traditional Living 1" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/trad-live-3.webp" 
+            alt="Traditional Living 2" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+          <img 
+            src="assets/images/trad-live-4.webp" 
+            alt="Traditional Living 3" 
+            loading="lazy"
+            class="w-full h-96 object-cover flex-shrink-0"
+          />
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button 
+            data-carousel-prev="living" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            ←
+          </button>
+          <div data-carousel-dots class="flex space-x-2">
+            <span class="w-3 h-3 bg-brand-accent rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+            <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+          </div>
+          <button 
+            data-carousel-next="living" 
+            class="bg-white/50 hover:bg-white/75 p-2 rounded-full transition-colors"
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const carousels = document.querySelectorAll('.carousel-container');
+
+  carousels.forEach(carousel => {
+    const carouselInner = carousel.querySelector('[data-carousel-inner]');
+    const prevButton = carousel.querySelector('[data-carousel-prev]');
+    const nextButton = carousel.querySelector('[data-carousel-next]');
+    const dotsContainer = carousel.querySelector('[data-carousel-dots]');
+    const slides = carouselInner.children;
+    let currentIndex = 0;
+
+    const updateCarousel = () => {
+      const offset = -currentIndex * 100;
+      carouselInner.style.transform = `translateX(${offset}%)`;
+      Array.from(dotsContainer.children).forEach((dot, index) => {
+        dot.classList.toggle('bg-brand-accent', index === currentIndex);
+        dot.classList.toggle('bg-white/50', index !== currentIndex);
+      });
+    };
+
+    const createDots = () => {
+      Array.from(slides).forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = `w-3 h-3 rounded-full ${index === 0 ? 'bg-brand-accent' : 'bg-white/50'}`;
+        dot.addEventListener('click', () => {
+          currentIndex = index;
+          updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+      });
+    };
+
+    createDots();
+
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    });
+
+    updateCarousel();
+  });
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const carousels = document.querySelectorAll('[data-carousel]');
+  
+  carousels.forEach(carousel => {
+    const inner = carousel.querySelector('[data-carousel-inner]');
+    const prevBtn = carousel.querySelector('[data-carousel-prev]');
+    const nextBtn = carousel.querySelector('[data-carousel-next]');
+    const dots = carousel.querySelectorAll('[data-carousel-dots] span');
+    
+    let currentIndex = 0;
+    const totalSlides = inner.children.length;
+    
+    const updateCarousel = () => {
+      inner.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-brand-accent', index === currentIndex);
+        dot.classList.toggle('bg-white/50', index !== currentIndex);
+      });
+    };
+    
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    });
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateCarousel();
+      });
+    });
+  });
+});
+</script>
+     
+    </main>
+
+     <footer class="bg-brand-accent text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <h3 class="text-2xl font-bold">Volta Festivals</h3>
+                    </div>
+                    <p class="text-white/80 mb-6">Celebrating the rich cultural heritage of the Volta Region through vibrant traditions, music, and community.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-1 after:bg-brand-highlight">
+                        Quick Links
+                    </h4>
+                    <nav>
+                        <ul class="space-y-3">
+                            <li>
+                                <a href="#" class="group flex items-center transition-all duration-300 hover:pl-2">
+                                    <span class="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="districts.html" class="group flex items-center transition-all duration-300 hover:pl-2">
+                                    <span class="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                                    Districts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="search.html" class="group flex items-center transition-all duration-300 hover:pl-2">
+                                    <span class="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                                    Festivals
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html" class="group flex items-center transition-all duration-300 hover:pl-2">
+                                    <span class="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                                    About Us
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-1 after:bg-brand-highlight">
+                        Connect With Us
+                    </h4>
+                    <div class="flex space-x-5">
+                        <a 
+                            href="https://twitter.com/voltafestivals" 
+                            class="text-2xl hover:text-brand-highlight transition-colors group"
+                            aria-label="Twitter Profile"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="transition-transform group-hover:scale-110">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a 
+                            href="https://instagram.com/voltafestivals" 
+                            class="text-2xl hover:text-brand-highlight transition-colors group"
+                            aria-label="Instagram Profile"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="transition-transform group-hover:scale-110">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.148-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a 
+                            href="https://facebook.com/voltafestivals" 
+                            class="text-2xl hover:text-brand-highlight transition-colors group"
+                            aria-label="Facebook Page"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="transition-transform group-hover:scale-110">
+                                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 border-t border-white/20 pt-8">
+                <p class="text-sm text-white/70">
+                    &copy; 2024 Volta Festivals. All Rights Reserved.
+                    <span class="block mt-2 text-xs">Celebrating Cultural Heritage</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const newsletterForm = document.getElementById("newsletter-form");
+        const emailInput = document.getElementById("email-input");
+
+        mobileMenuToggle.addEventListener("click", () => {
+          mobileMenu.classList.add("active");
+          mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        });
+
+        mobileMenuClose.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+          mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        });
+
+        document.querySelectorAll("#mobile-menu a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if(emailInput.validity.valid) {
+            alert('Thank you for subscribing!');
+            newsletterForm.reset();
+          } else {
+            emailInput.reportValidity();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
